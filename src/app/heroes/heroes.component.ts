@@ -15,13 +15,13 @@ export class HeroesComponent implements OnInit {
     };
 
    // heroes = HEROES;
-    
-    heroes : Hero[];
+
+    heroes: Hero[];
     //selectedHero: Hero;
-    constructor(private heroService: HeroService) { }
+    constructor(private heroService: HeroService) {}
 
     ngOnInit() {
-         this.getHeroes();
+        this.getHeroes();
     }
 
     /*onSelect(hero: Hero): void {
@@ -31,17 +31,22 @@ export class HeroesComponent implements OnInit {
     getHeroes(): void {
         this.heroes = this.heroService.getHeroes();
     }*/
-    
+
     //The subscribe() method passes the emitted array to the callback, which sets the component's heroes property.
     //Heroes est la variable de retour de getHeroes
-      getHeroes(): void {
-       this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
-      }
-      
+    getHeroes(): void {
+        this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes);
+    }
+
     add(name: string): void {
-     name = name.trim();
-     if (!name) { return; }
-     this.heroService.addHero({ name } as Hero).subscribe(hero => {this.heroes.push(hero);});
-   }
+        name = name.trim();
+        if (!name) {return;}
+        this.heroService.addHero({name} as Hero).subscribe(hero => {this.heroes.push(hero);});
+    }
+
+    delete(hero: Hero): void {
+        this.heroes = this.heroes.filter(h => h !== hero);
+        this.heroService.deleteHero(hero).subscribe();
+    }
     
 }
